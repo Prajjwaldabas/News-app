@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 function SideNav() {
   return (
-    <Nav defaultActiveKey="/home" className="flex-column mt-5 bg-light p-2 pt-5" style={{height:"90vh",width:"15%",position:"fixed",borderRadius:"20px"}} >
+    <Nav defaultActiveKey="/" className="flex-column mt-5 bg-light p-2 pt-5" style={{height:"90vh",width:"15%",position:"fixed",borderRadius:"20px"}} >
     <ButtonGroup vertical >
     <Button  variant="light py-3" className='flex g-3'> <HomeIcon/>  <p className='fwb'>Home</p></Button>
     <Link to='/articles/saved' className='text-decoration-none w-100'><Button  variant="light py-3 " className='flex g-3 w-100 '><BookmarkIcon/><p className='fwb'>Saved </p></Button></Link>  

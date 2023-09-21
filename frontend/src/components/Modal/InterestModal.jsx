@@ -36,6 +36,7 @@ const navigate= useNavigate()
       function handleSubmit() {
         const token = localStorage.getItem('token'); // Retrieve the token from local storage
 
+        props.onHide()
         console.log("token",token)
       
         // Check if token is present
@@ -51,7 +52,7 @@ const navigate= useNavigate()
         // Set up the headers with the token
         const headers = {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Include the token in the headers
+          Authorization: ` ${token}`, // Include the token in the headers
         };
 
         console.log(headers)
@@ -79,7 +80,7 @@ const navigate= useNavigate()
           })
           .catch((error) => {
             // Handle any errors
-            console.error('An error occurred', error);
+            console.error('An error occurred', error.message);
           });
       }
 

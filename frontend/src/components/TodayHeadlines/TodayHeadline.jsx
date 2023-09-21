@@ -15,7 +15,7 @@ console.log(token)
   // const ApiUrl = 'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=d84618f1fafd4dccb5d0869cc5e54e70';
 
 
-  const apiKey = 'pub_2982048fa920d8d89ea41a54dd34f1a14b06b';
+  const apiKey = 'pub_298294797f9b7d7621f0ca9371f0b5c2539b7';
 const query = 'usa';
   useEffect(() => {
     // Fetch news data from the News API

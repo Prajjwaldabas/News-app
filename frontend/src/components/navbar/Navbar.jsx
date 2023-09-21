@@ -9,7 +9,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useUser } from '../../userContext'; // Import your UserContext
 import React, { useEffect } from 'react'; // Import useEffect
-
+import { Link } from 'react-router-dom';
 
 function NavScrollExample() {
 
@@ -56,8 +56,8 @@ function NavScrollExample() {
           }}>
          
       <Dropdown.Item href="#"></Dropdown.Item>
-      <Dropdown.Item href="/auth/login">Login</Dropdown.Item>
-      <Dropdown.Item href="/auth/signup">Sign Up </Dropdown.Item>
+      <Dropdown.Item >   <Link to='/auth/login' >Login </Link></Dropdown.Item>
+      <Dropdown.Item > <Link to='/auth/signup' >SignUp </Link></Dropdown.Item>
     
     </DropdownButton>
             
