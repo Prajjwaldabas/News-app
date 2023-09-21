@@ -1,0 +1,82 @@
+
+.Interest{
+    overflow: hidden; /* Hide both vertical and horizontal scrollbars */
+  overflow-y: hidden; /* Explicitly hide vertical scrollbar */
+  width: 100%;
+ }
+.shopCat{
+    width: 100%;
+    /* border: 1px solid green; */
+}
+
+
+.carouselContainer {
+    display: flex; /* Use flex to align cards horizontally */
+    gap: 50px;
+    margin-top: 1rem;
+    /* border: 1px solid red; */
+    width: 100%;
+    overflow: hidden;
+    overflow-x: auto; /* Use 'auto' instead of 'scroll' for better user experience */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on mobile devices */
+   
+   
+  }
+  
+  .cardContainer{
+display: flex;
+gap: 50px;
+
+  
+  }
+  
+  .carouselCard {
+    
+    cursor: pointer;
+    height: 225px;
+    position: relative;
+    width: 200px;
+    overflow: hidden;
+    /* border: 1px solid red; */
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    flex: 0 0 auto; /* Allow cards to grow and shrink as needed */
+  }
+  .carouselCard h3{
+    z-index: 9999;
+position: absolute;
+bottom: 10px;
+color: white;
+font-weight: 700;
+
+  }
+  .cardImage {
+    border-radius: 10px;
+
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s;
+    transform: scale(1);
+  }
+ 
+ 
+  
+  .cardImage:hover{
+    transform: scale(1.1);
+}
+
+  
+/* Hide the scrollbar */
+.carouselContainer::-webkit-scrollbar {
+    width: 0.25rem; /* Set the width of the scrollbar */
+  }
+  
+  .carouselContainer::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Make the thumb transparent */
+  }
