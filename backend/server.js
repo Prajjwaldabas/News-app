@@ -18,13 +18,14 @@ app.use(bodyParser.urlencoded({limit:'30mb',extended:true}))
 
 // app.use(bodyParser.json()); // Parse JSON request bodies
 
-// Use the cors middleware
-app.use(cors({
-  origin: 'http://localhost:3000', // Replace with the origin of your client application
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type,Authorization'
-}));
+const allowedOrigins = ['https://mern-news-app-innorik.onrender.com/', 'http://localhost:3000/'];
 
+// Set up CORS to allow requests from the specified origins
+app.use(cors({
+  origin: allowedOrigins,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // If you need to include cookies in your requests
+}));
 
 
 app.use('/auth',AuthRoute)
