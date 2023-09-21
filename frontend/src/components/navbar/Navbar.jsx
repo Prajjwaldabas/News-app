@@ -9,10 +9,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { useUser } from '../../userContext'; // Import your UserContext
 import React, { useEffect } from 'react'; // Import useEffect
-import HomeIcon from '@mui/icons-material/Home';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import PersonIcon from '@mui/icons-material/Person';
-import LogoutIcon from '@mui/icons-material/Logout';
+
 
 function NavScrollExample() {
 
