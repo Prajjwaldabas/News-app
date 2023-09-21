@@ -5,15 +5,18 @@ import { useEffect, useState } from 'react';
 function RecNews() {
   const [newsData, setNewsData] = useState([]);
 
+  const apiKey = 'pub_298294797f9b7d7621f0ca9371f0b5c2539b7';
+const query = 'technology,covid';
   useEffect(() => {
       
-    const ApiUrl = 'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=d84618f1fafd4dccb5d0869cc5e54e70';
+    // const ApiUrl = 'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=d84618f1fafd4dccb5d0869cc5e54e70';
     // Fetch news data from the News API
-    fetch(ApiUrl)
+    fetch(`https://newsdata.io/api/1/news?apikey=${apiKey}&q=${query}`)
       .then((response) => response.json())
       .then((data) => {
         // Assuming the data is an array of news articles
-        setNewsData(data.articles);
+        console.log(data.results.reverse())
+        setNewsData(data.results);
       })
       .catch((error) => {
         console.error('Error fetching news:', error);

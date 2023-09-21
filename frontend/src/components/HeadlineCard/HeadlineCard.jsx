@@ -68,11 +68,11 @@ function BasicExample({ article }) {
 
   return (
     <Card style={{ width: '24rem', padding: '0 10px', position: 'relative' }} className='flex fd-row aic jcc'>
-      <Card.Img variant='' src={article.urlToImage} style={{ width: '80px', height: '80px' }} />
+      <Card.Img variant='' src={article.image_url} style={{ width: '80px', height: '80px' }} />
       <Card.Body>
         <p className='fwb'>{article.title}</p>
         <Card.Text></Card.Text>
-        <Link variant='primary' href={article.url}>
+        <Link variant='primary' href={article.link}>
           Read More
         </Link>
       </Card.Body>

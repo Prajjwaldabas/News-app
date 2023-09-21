@@ -12,8 +12,11 @@ console.log(token)
   const [filteredNews, setFilteredNews] = useState([]);
 
   console.log(userInterests)
-  const ApiUrl = 'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=d84618f1fafd4dccb5d0869cc5e54e70';
+  // const ApiUrl = 'https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=d84618f1fafd4dccb5d0869cc5e54e70';
 
+
+  const apiKey = 'pub_2982048fa920d8d89ea41a54dd34f1a14b06b';
+const query = 'usa';
   useEffect(() => {
     // Fetch news data from the News API
     const storedUserInterests = localStorage.getItem('userInterests');
@@ -28,16 +31,18 @@ console.log(token)
 
 
 
-    fetch(ApiUrl)
+    fetch(`https://newsdata.io/api/1/news?apikey=${apiKey}&q=${query}`)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data)
+      console.log("data",data.results)
       if (userInterests.length === 0 || !token)  {
         // If userInterests is empty, set filteredNews to contain all articles
-        setFilteredNews(data.articles);
+        setFilteredNews(data.results);
       } else {
         // Filter the news data based on user interests
-        const filteredNews = data.articles.filter((article) => {
+        const filteredNews = (data.results || []).filter((article) => {
+
+
           const articleContent = article.content || '';
           const articleTitle = article.title || '';
           const articleDescription = article.description || '';
