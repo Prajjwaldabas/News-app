@@ -47,9 +47,9 @@ if(formData.password===formData.confirmPassword){
 
             if (data.token) {
               // Save the token in local storage
-              console.log(data.token)
+              console.log('user token',data.token)
               localStorage.setItem('token', data.token);
-            navigate('/')
+            navigate('/auth/login')
             }
           } else {
             const data = await response.json();
