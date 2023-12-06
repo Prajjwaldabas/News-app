@@ -44,14 +44,17 @@ const Login = () => {
   return (
 
 
-    <Container  className='flex jcc aic h-100 bg-secondary-subtle w-100'  fluid>
+    <Container  className='flex jcc aic h-100  w-100 gradient-bg'  fluid>
     <Row  className='flex jcc aic h-100 w-100' >
       <Col className='flex jcc aic' style={{height:"100vh",}}>
-    <Form style={{width:"400px",}}   >
+    <Form style={{width:"400px",}}  className='authForm'  >
+<div className='flex jcc aic' >
+<h2>Login</h2>
+</div>
 
 
         
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3 mt-5" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
         <Form.Control type="email" placeholder="Enter email"  name='email'  
                 onChange={(e) =>
@@ -82,7 +85,7 @@ const Login = () => {
       <b>{errorMsg}</b>
     
       <Button variant="secondary" type="submit"   onClick={handleLogin}>
-        Submit
+        Login
       </Button>
     </Form>
 

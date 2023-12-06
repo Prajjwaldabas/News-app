@@ -136,3 +136,16 @@ color: grey;
   }
 
 
+
+  .authForm{
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+
+  }
+
+  .gradient-bg{
+    background-image: linear-gradient(to bottom, #FF9AEf,#FEDAC1,#D5E1CF,#B7E6D9);
+    background-color: #b7e6d9;
+    background-repeat: no-repeat;
+  }

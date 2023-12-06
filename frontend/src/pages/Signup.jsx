@@ -37,11 +37,15 @@ const Signup = () => {
   });
 
   return (
-    <Container className='flex jcc aic h-100 bg-secondary-subtle w-100' fluid>
+    <Container className='flex jcc aic h-100  w-100 gradient-bg' fluid>
       <Row className='flex jcc aic h-100 w-100'>
         <Col className='flex jcc aic' style={{ height: "100vh" }}>
-          <Form style={{ width: "400px" }}>
-            <Form.Group className="mb-3" controlId="formBasicName">
+          <Form style={{ width: "400px" }} className='authForm'  >
+<div className='flex jcc aic'>
+<h2>Sign Up</h2> 
+</div>
+        
+            <Form.Group className="mb-3 mb-5" controlId="formBasicName">
               <Form.Label>Name</Form.Label>
               <Form.Control
                 type="text"
@@ -89,8 +93,8 @@ const Signup = () => {
               />
             </Form.Group>
 
-            <Button variant="secondary" type="submit" onClick={handleSignup}>
-              Submit
+            <Button variant="secondary" type="submit" onClick={handleSignup}  >
+              Sign In
             </Button>
 
             <Form.Text className="text-muted">

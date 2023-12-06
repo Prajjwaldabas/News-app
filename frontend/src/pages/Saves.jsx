@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import RecNewsCard from '../components/RecNewsCard/RecNewsCard';
+
 import { getSavedArticlesFromFirebase } from '../firebase';
+import HeadlineCard from '../components/HeadlineCard/HeadlineCard';
 
 function Saves() {
   const [savedArticles, setSavedArticles] = useState([]);
@@ -20,8 +21,8 @@ function Saves() {
           <Col className='flex fd-col jcc aic p-5'>
             <h1>Saves</h1>
             <div className='d-flex flex-wrap g-3 m-5'>
-              {savedArticles.map((article) => (
-                <RecNewsCard key={article.id} article={article} />
+              {savedArticles.map((article,index) => (
+                <HeadlineCard key={index} article={article} />
               ))}
             </div>
           </Col>
