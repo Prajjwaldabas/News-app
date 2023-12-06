@@ -1,101 +1,101 @@
-
 import Card from 'react-bootstrap/Card';
-
 import { Link } from 'react-router-dom';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useEffect, useState } from 'react';
+import { checkIfArticleIsSaved, saveArticleInFirebase, removeArticleFromFirebase } from '../../firebase';
 
-function BasicExample({ article }) {
-  const [token, setToken] = useState(false);
-  const [save, setSave] = useState(true);
-  const [item, setItem] = useState([]);
+function HeadlineCard({ article, viewType, index }) {
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    const Token = localStorage.getItem('token');
-    console.log(Token)
-
-    if (Token) {
-      setToken(true);
-    }
+  
+    checkSavedStatus();
   }, []);
 
-  const saveArticle = async () => {
-    console.log(process.env.REACT_APP_BASE_URL);
-
-    setSave(false);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/articles/save`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({ article }),
-      });
-
-      if (response.ok) {
-        setSave(false);
-      } else {
-        console.error('Failed to save article:', response.statusText);
-      }
-    } catch (error) {
-      console.error('An error occurred while saving the article:', error);
-    }
+  const checkSavedStatus = async () => {
+    const savedStatus = await checkIfArticleIsSaved(index);
+    setIsSaved(savedStatus);
   };
 
-  const removeArticle = async () => {
-    setSave(true);
-    try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/articles/remove`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `${localStorage.getItem('token')}`,
-        },
-        body: JSON.stringify({ article }),
-      });
-
-      if (response.ok) {
-        setSave(true);
-      } else {
-        console.error('Failed to remove article:', response.statusText);
-      }
-    } catch (error) {
-      console.error('An error occurred while removing the article:', error);
-    }
+  const saveArticle = async (e) => {
+    e.stopPropagation();
+    await saveArticleInFirebase(index);
+    setIsSaved(true);
+  };
+  
+  const removeArticle = async (e) => {
+    e.stopPropagation();
+    await removeArticleFromFirebase(index);
+    setIsSaved(false);
   };
 
   return (
-    <Card style={{ width: '24rem', padding: '0 10px', position: 'relative' }} className='flex fd-row aic jcc'>
-      <Card.Img variant='' src={article.image_url} style={{ width: '80px', height: '80px' }} />
-      <Card.Body>
-        <p className='fwb'>{article.title}</p>
-        <Card.Text></Card.Text>
-        <Link variant='primary' href={article.link}>
-          Read More
-        </Link>
-      </Card.Body>
-      {token && (
+   
+      <Card
+        style={{
+          
+          width: !viewType ? '20rem' : '30rem',
+          padding: '0 10px',
+          height: !viewType ? '400px' : '150px',
+          overflow: 'hidden',
+          marginTop: '3rem',
+          position: 'relative',
+          flexDirection: !viewType ? 'column' : 'row',
+        }}
+        className='flex aic jcsb'
+      >
+        
+        <div style={{ height: !viewType ? '40%' : '80px' }}>
+        <Link to={`/details/${index}`} className='text-decoration-none'>
+          <Card.Img
+            variant=''
+            src={article.urlToImage}
+            style={{
+              width: !viewType ? '20rem' : '80px',
+              height: !viewType ? '100%' : '80px',
+              backgroundSize: 'cover',
+            
+            }}
+          />
+             </Link>
+        </div>
+     
+       
+        <Card.Body>
+          <p className='fwb'>{article.title}</p>
+          {!viewType && (
+            <Card.Text className='desc-text'>
+              {article?.description?.split(' ').slice(0, 12).join(' ')}...
+            </Card.Text>
+          )}
+
+          <Link variant='primary' to={`/details/${index}`}>
+            Read More
+          </Link>
+        </Card.Body>
+    
+
         <>
-          <button
-            style={{ position: 'absolute', top: '0px', right: '0px' }}
-            onClick={saveArticle}
-            className={save ? 'd-flex' : 'd-none'}
-          >
-            <BookmarkBorderIcon />
-          </button>
-          <button
-            style={{ position: 'absolute', top: '0px', right: '0px' }}
-            onClick={removeArticle}
-            className={save ? 'd-none' : ' d-flex'}
-          >
-            <BookmarkIcon />
-          </button>
+        <button
+  style={{ position: 'absolute', bottom: '0px', right: '0px', zIndex: "9999" }}
+  onClick={(e) => (isSaved ? removeArticle(e) : saveArticle(e))}
+  className={isSaved ? 'd-flex' : 'd-none'}
+>
+  <BookmarkBorderIcon />
+</button>
+<button
+  style={{ position: 'absolute', bottom: '0px', right: '0px', zIndex: "9999" }}
+  onClick={saveArticle}
+  className={isSaved ? 'd-none' : 'd-flex'}
+>
+  <BookmarkIcon />
+</button>
         </>
-      )}
-    </Card>
+      </Card>
+  
+     
   );
 }
 
-export default BasicExample;
+export default HeadlineCard;

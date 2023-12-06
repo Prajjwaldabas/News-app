@@ -1,0 +1,48 @@
+.res-Nav{
+    display: none !important;
+}
+
+
+@media (min-width: 570px) {
+    .res-Nav {
+      display: block !important;
+     
+    }
+
+  
+  }
+
+@media (max-width: 812px) {
+ .sideNav{
+    display: none !important;
+ }
+ .res-Nav {
+    display: block !important;
+   
+  }
+
+ .toggleNav{
+
+    display: block !important;
+ }
+ .nav-cont{
+    display: block !important;
+ }
+ .resnav{
+    display: block !important;
+ }
+ .newsHeading {
+   margin: 0 auto;
+   font-size: 30px;
+}
+
+
+}
+
+
+@media (max-width: 600px) {
+   .newsHeading {
+      margin: 0 auto;
+      font-size: 20px;
+  }
+}

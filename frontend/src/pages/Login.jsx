@@ -8,90 +8,80 @@ import { useState } from 'react';
 
 import { useUser } from '../userContext';
 
-function Login() {
 
-  const { setUser } = useUser();
-    const navigate = useNavigate();
-
-
-    const apiUrl = process.env.REACT_APP_BASE_URL;
-const [formData,setFormData] = useState({ "email": '', "password": '' })
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { firebaseAuth } from '../firebase';
 
 
-    const handleSubmit= async (event)=>{
-        event.preventDefault();
+const Login = () => {
+  const navigate = useNavigate();
 
-        try {
-          const response = await fetch(`${apiUrl}/auth/login`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-    
+  const [formvalues, setformValues] = useState({
+    email: "",
+    password: "",
+  });
 
 
-          if (response.ok) {
-       
-            const data = await response.json();
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-            console.log('Request succeeded');
-            
+  const [ errorMsg , setErrorMsg] = useState("")
 
-            if (data.token) {
-              console.log(data.token)
-              console.log(data.user)
-              setUser(data.user); 
-            
-            navigate('/')
-            }
-          } else {
-            
-            console.error('Request failed');
-          }
-        } catch (error) {
-          console.error('An error occurred', error);
-        }
-
-        
+  const handleLogin = async (event) => {
+    try {
+      event.preventDefault()
+      const { email, password } = formvalues;
+      await signInWithEmailAndPassword(firebaseAuth, email, password);
+    } catch (error) {
+      console.log(error);
+      setErrorMsg(error.message)
     }
-
-
-    const handleChange= (event)=>{
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-
-
+  };
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) {
+      navigate("/");
+      console.log(currentUser)
     }
+  });
+
   return (
 
 
     <Container  className='flex jcc aic h-100 bg-secondary-subtle w-100'  fluid>
     <Row  className='flex jcc aic h-100 w-100' >
       <Col className='flex jcc aic' style={{height:"100vh",}}>
-    <Form style={{width:"400px",}}   onSubmit={handleSubmit} >
+    <Form style={{width:"400px",}}   >
 
 
         
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email"  name='email'     value={formData.email}  onChange={handleChange} />
+        <Form.Control type="email" placeholder="Enter email"  name='email'  
+                onChange={(e) =>
+                  setformValues({
+                    ...formvalues,
+                    [e.target.name]: e.target.value,
+                  })
+                } />
        
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password"  name='password'     value={formData.password}   onChange={handleChange}/>
+        <Form.Control type="password" placeholder="Password"  name='password'       value={formvalues.password}
+                onChange={(e) =>
+                  setformValues({
+                    ...formvalues,
+                    [e.target.name]: e.target.value,
+                  })
+                }/>
 
 
         <Form.Text className="text-muted">
          Don't have an account? <Link to="/auth/signup"> Signup Here</Link>
         </Form.Text>
       </Form.Group>
+
+      <b>{errorMsg}</b>
     
-      <Button variant="secondary" type="submit">
+      <Button variant="secondary" type="submit"   onClick={handleLogin}>
         Submit
       </Button>
     </Form>

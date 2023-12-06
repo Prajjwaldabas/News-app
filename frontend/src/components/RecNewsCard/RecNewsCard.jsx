@@ -8,11 +8,11 @@ function RecNewsCard({article}) {
   return (
     <CardGroup >
       <Card style={{ width: '24rem' }} >
-        <Card.Img variant="top" src={article.image_url}  style={{height:"250px"}}/>
+        <Card.Img variant="top" src={"article.image_url"}  style={{height:"250px"}}/>
         <Card.Body>
-          <Card.Title>{article.title}</Card.Title>
+          <Card.Title>{"article.title"}</Card.Title>
           <Card.Text>
-        {article.description}
+        {"article.description"}
           </Card.Text>
         </Card.Body>
         <Card.Footer>

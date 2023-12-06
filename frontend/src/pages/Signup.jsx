@@ -4,143 +4,103 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useState } from 'react';
-import { useNavigate ,Link} from 'react-router-dom';
+import { createUserWithEmailAndPassword, onAuthStateChanged,updateProfile } from 'firebase/auth';
+import { firebaseAuth } from '../firebase';
+import { useNavigate, Link } from 'react-router-dom';
 
+const Signup = () => {
+  const navigate = useNavigate();
+  const [formValues, setFormValues] = useState({
+    displayName: "",
+    email: "",
+    password: ""
+  });
 
-function Signup() {
+  const handleSignup = async (event) => {
+    try {
+      event.preventDefault();
+      const { email, password, displayName } = formValues;
+      await createUserWithEmailAndPassword(firebaseAuth, email, password);
 
+      // Optionally, update the user's display name
+      await updateProfile(firebaseAuth.currentUser, { displayName });
 
-    const navigate = useNavigate()
-    const apiUrl = process.env.REACT_APP_BASE_URL;
-   
-
-
-    const [formData,setFormData] = useState({ "firstname":'', "lastname":'',  "email": '', "password": '' , "confirmPassword":''})
-const[passNotMatch,setPassNotMatch]=useState(false)
-
-    const handleSubmit= async (event)=>{
-       
-event.preventDefault()
-if(formData.password===formData.confirmPassword){
- 
-
-        try {
-
-            console.log(JSON.stringify(formData))
-          const response = await fetch(`${apiUrl}/auth/signup`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-
-
-   
-          
-
-       
-
-
-          if (response.status === 200) {
-            const data = await response.json();
-
-            if (data.token) {
-              // Save the token in local storage
-              console.log('user token',data.token)
-              localStorage.setItem('token', data.token);
-            navigate('/auth/login')
-            }
-          } else {
-            const data = await response.json();
-            console.error('Request failed:', data);
-          }
-        } catch (error) {
-          console.error('An error occurred', error);
-        }
-
-    } 
-
-    else{
-        setPassNotMatch(true)
+    } catch (error) {
+      console.error('Error signing up:', error.message);
     }
+  };
 
-
+  onAuthStateChanged(firebaseAuth, (currentUser) => {
+    if (currentUser) {
+      navigate("/");
     }
-
-    
-
-
-    const handleChange= (event)=>{
-        setPassNotMatch(false)
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
-
-
-    }
-
+  });
 
   return (
+    <Container className='flex jcc aic h-100 bg-secondary-subtle w-100' fluid>
+      <Row className='flex jcc aic h-100 w-100'>
+        <Col className='flex jcc aic' style={{ height: "100vh" }}>
+          <Form style={{ width: "400px" }}>
+            <Form.Group className="mb-3" controlId="formBasicName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Name"
+                name="displayName"
+                value={formValues.displayName}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    [e.target.name]: e.target.value
+                  })
+                }
+              />
+            </Form.Group>
 
-    <Container  className='flex jcc aic h-100 bg-secondary-subtle w-100'  fluid>
-    <Row  className='flex jcc aic h-100 w-100' >
-      <Col className='flex jcc aic' style={{height:"100vh",}}>
-    <Form   style={{width:"400px",}}  onSubmit={handleSubmit} >
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                name="email"
+                value={formValues.email}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    [e.target.name]: e.target.value
+                  })
+                }
+              />
+            </Form.Group>
 
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={formValues.password}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    [e.target.name]: e.target.value
+                  })
+                }
+              />
+            </Form.Group>
 
+            <Button variant="secondary" type="submit" onClick={handleSignup}>
+              Submit
+            </Button>
 
-<Form.Group className="mb-3" controlId="firstname">
-        <Form.Label>First Name</Form.Label>
-        <Form.Control type="text" placeholder="firstname" name='firstname'     value={formData.firstname}  onChange={handleChange}/>
-      </Form.Group>
-
-<Form.Group className="mb-3" controlId="lastname">
-        <Form.Label>Last Name</Form.Label>
-        <Form.Control type="text" placeholder="lastname" name='lastname'     value={formData.lastname}  onChange={handleChange}/>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-
-
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" name='email'     value={formData.email}  onChange={handleChange} />
-        <Form.Text className="text-muted">
-     
-        </Form.Text>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password"  name='password'     value={formData.password}   onChange={handleChange}/>
-      </Form.Group>
-
-      <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-        <Form.Label>Confirm Password</Form.Label>
-        <Form.Control type="password" placeholder=" Confirm Password"  name='confirmPassword'     value={formData.confirmPassword}   onChange={handleChange} />
-
-        <Form.Text className="text-muted">
-         Already have an account? <Link to="/auth/login">Login Here</Link>
-        </Form.Text>
-        
-{passNotMatch && <Form.Text className="text-danger">Password Not Matched</Form.Text>}
-      </Form.Group>
-
-
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        {/* <Form.Check type="checkbox" label="Check me out" /> */}
-      </Form.Group>
-      <Button variant="secondary" type="submit" >
-        Submit
-      </Button>
-
-
-    </Form>
-
-
-    </Col>
-    </Row>
-  </Container>
+            <Form.Text className="text-muted">
+              Already have an account? <Link to="/auth/login">Login Here</Link>
+            </Form.Text>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
-export default Signup
+export default Signup;

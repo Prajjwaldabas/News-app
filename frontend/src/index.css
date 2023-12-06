@@ -1,4 +1,16 @@
 /* utilities classes */
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+JP:wght@100;200;300;400;500;600&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500&family=Roboto:ital,wght@0,300;0,400;0,500;1,100;1,300;1,400;1,500&family=Shippori+Mincho:wght@800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+
+*{
+  font-family: 'Shippori Mincho', serif;
+}
+
+body{
+  background-color: bisque;
+}
+
 .flex{
     display: flex !important;  
   }
@@ -69,3 +81,58 @@ padding-top: 1rem;
     height: 100%;
   }
   
+
+  /* .ViewBtn{
+    position: absolute;
+    right: 0;
+    background-color: beige;
+    
+  } */
+
+  
+  .viewType{
+  display: flex;
+  justify-content: end;
+position: absolute;
+top: 50px;
+right: 0;
+border: none;
+width: 150px;
+background-color: aquamarine;
+
+  }
+
+  #dropdown-basic{
+background-color: white !important;
+display: flex;
+border: none;
+/* flex-direction: column; */
+align-items: center;
+/* justify-content: center; */
+color: grey;
+
+  }
+
+
+  .newsHeading{
+    margin: 0 auto;
+    font-size: 50px;
+    margin-left: 10rem;
+  }
+
+  a{
+    color: rgb(104, 103, 107) !important;
+
+  }
+
+  a:hover{
+    color: rgb(37, 33, 33) !important;
+  }
+
+  .desc-text{
+    color: rgb(135, 135, 135);
+    font-size: 15px;
+    
+  }
+
+
